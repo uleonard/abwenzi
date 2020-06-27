@@ -20,7 +20,7 @@ class CreateRepaymentsTable extends Migration
             $table->string('receipt');
             $table->string('method')->default('CASH');
             $table->double('amount');
-            $table->string('comment');
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }

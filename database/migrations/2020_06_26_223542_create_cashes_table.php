@@ -16,8 +16,8 @@ class CreateCashesTable extends Migration
         Schema::create('cashes', function (Blueprint $table) {
             $table->id();
             $table->date('trans_date');
-            $table->string('description');
-            $table->string('entry');
+            $table->string('description')->nullable();
+            $table->string('entry')->nullable();
             $table->double('amount');
             $table->double('balance');
             $table->timestamps();

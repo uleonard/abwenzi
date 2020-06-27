@@ -17,9 +17,9 @@ class CreateEquitiesTable extends Migration
             $table->id();
             $table->integer('shareholder');
             $table->date('trans_date');
-            $table->string('entry');
+            $table->string('entry')->nullable();
             $table->double('amount');
-            $table->string('comment');
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }
