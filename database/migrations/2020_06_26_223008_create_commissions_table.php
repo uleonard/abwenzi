@@ -19,7 +19,8 @@ class CreateCommissionsTable extends Migration
             $table->integer('agent');
             $table->integer('loan');
             $table->double('commission');
-            $table->string('is_paid')->nullable();
+            $table->integer('has_qualified')->default(0);
+            $table->integer('is_paid')->default(0);
             $table->date('date_paid')->nullable();
         });
     }
