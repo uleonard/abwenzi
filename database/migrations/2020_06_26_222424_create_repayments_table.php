@@ -21,6 +21,7 @@ class CreateRepaymentsTable extends Migration
             $table->string('method')->default('CASH');
             $table->double('amount');
             $table->string('comment')->nullable();
+            $table->integer('entered_by');
             $table->timestamps();
         });
     }

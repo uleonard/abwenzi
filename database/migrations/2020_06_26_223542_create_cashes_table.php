@@ -20,6 +20,7 @@ class CreateCashesTable extends Migration
             $table->string('entry')->nullable();
             $table->double('amount');
             $table->double('balance');
+            $table->integer('entered_by');
             $table->timestamps();
         });
     }

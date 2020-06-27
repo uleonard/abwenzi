@@ -20,6 +20,7 @@ class CreateEquitiesTable extends Migration
             $table->string('entry')->nullable();
             $table->double('amount');
             $table->string('comment')->nullable();
+            $table->integer('entered_by');
             $table->timestamps();
         });
     }

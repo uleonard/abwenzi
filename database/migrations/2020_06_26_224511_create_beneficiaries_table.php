@@ -21,6 +21,7 @@ class CreateBeneficiariesTable extends Migration
             $table->string('surname');
             $table->date('dob');
             $table->string('relationship');
+            $table->integer('entered_by');
             $table->timestamps();
         });
     }
