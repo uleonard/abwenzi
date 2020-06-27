@@ -61,5 +61,14 @@ class Loan extends Model
 
     }
 
+    /**
+     * Get the attachments owned by this loan.
+     */
+    public function attachments()
+    {
+        return $this->hasMany('App\LoanAttachment', 'loan');
+
+    }
+
 }
 

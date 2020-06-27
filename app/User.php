@@ -98,4 +98,48 @@ class User extends Authenticatable
         return $this->hasMany('App\Cash', 'entered_by');
 
     }
+
+    /**
+     * Get the equities entered by this user.
+     */
+    public function equities()
+    {
+        return $this->hasMany('App\Equity', 'entered_by');
+
+    }
+
+    /**
+     * Get the savings entered by this user.
+     */
+    public function savings()
+    {
+        return $this->hasMany('App\Savings', 'entered_by');
+
+    }
+    /**
+     * Get the savings withdrawals entered by this user.
+     */
+    public function savings_withdrawals()
+    {
+        return $this->hasMany('App\SavingsWithdrawal', 'entered_by');
+
+    }
+
+    /**
+     * Get the beneficiaries entered by this user.
+     */
+    public function beneficiaries()
+    {
+        return $this->hasMany('App\Beneficiary', 'entered_by');
+
+    }
+
+    /**
+     * Get the expenses entered by this user.
+     */
+    public function expenses()
+    {
+        return $this->hasMany('App\Expense', 'entered_by');
+
+    }
 }
