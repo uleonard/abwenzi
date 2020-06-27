@@ -15,6 +15,12 @@ class CreateBeneficiariesTable extends Migration
     {
         Schema::create('beneficiaries', function (Blueprint $table) {
             $table->id();
+            $table->integer('shareholder');
+            $table->integer('percent');
+            $table->string('firstname');
+            $table->string('surname');
+            $table->date('dob');
+            $table->string('relationship');
             $table->timestamps();
         });
     }

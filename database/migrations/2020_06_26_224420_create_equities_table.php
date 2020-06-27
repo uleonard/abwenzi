@@ -15,6 +15,11 @@ class CreateEquitiesTable extends Migration
     {
         Schema::create('equities', function (Blueprint $table) {
             $table->id();
+            $table->integer('shareholder');
+            $table->date('trans_date');
+            $table->string('entry');
+            $table->double('amount');
+            $table->string('comment');
             $table->timestamps();
         });
     }

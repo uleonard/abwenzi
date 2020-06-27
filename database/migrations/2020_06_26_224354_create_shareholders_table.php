@@ -15,6 +15,11 @@ class CreateShareholdersTable extends Migration
     {
         Schema::create('shareholders', function (Blueprint $table) {
             $table->id();
+            $table->string('firstname');
+            $table->string('surname');
+            $table->string('gender');
+            $table->string('phone');
+            $table->string('email');
             $table->timestamps();
         });
     }
