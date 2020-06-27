@@ -37,9 +37,27 @@ class Loan extends Model
      /**
      * Get the user who entered this loan.
      */
-    public function eentered_by()
+    public function entered_by()
     {
         return $this->belongsTo('App\User', 'entered_by');
+
+    }
+
+    /**
+     * Get the repayments owned by this loan.
+     */
+    public function repayments()
+    {
+        return $this->hasMany('App\Repayment', 'loan');
+
+    }
+
+    /**
+     * Get the commissions owned by this loan.
+     */
+    public function commissions()
+    {
+        return $this->hasMany('App\Commission', 'loan');
 
     }
 
