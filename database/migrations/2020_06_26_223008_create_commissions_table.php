@@ -16,6 +16,11 @@ class CreateCommissionsTable extends Migration
         Schema::create('commissions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->integer('agent');
+            $table->integer('loan');
+            $table->double('commission');
+            $table->string('is_paid');
+            $table->date('date_paid');
         });
     }
 

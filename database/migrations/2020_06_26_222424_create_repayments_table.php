@@ -15,6 +15,12 @@ class CreateRepaymentsTable extends Migration
     {
         Schema::create('repayments', function (Blueprint $table) {
             $table->id();
+            $table->integer('loan');
+            $table->date('date_paid');
+            $table->string('receipt');
+            $table->string('method')->default('CASH');
+            $table->double('amount');
+            $table->string('comment');
             $table->timestamps();
         });
     }
