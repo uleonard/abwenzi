@@ -16,3 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::resources([
+    'loans' => 'LoanController',
+    'clients' => 'ClientController',
+    'repayments' => 'RepaymentController'
+]);
+
+//Route::get('/loans/types', 'LoanTypeController@index');
+//Route::post('/loans/types', 'LoanTypeController@store');
