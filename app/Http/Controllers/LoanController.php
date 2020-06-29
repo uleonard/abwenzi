@@ -18,7 +18,9 @@ class LoanController extends Controller
     public function index()
     {
         $loans = Loan::all();
-        return $loans;
+
+        return view('loans.list',['rows'=>$loans]);
+        //return $loans;
     }
 
     /**
@@ -28,7 +30,7 @@ class LoanController extends Controller
      */
     public function create()
     {
-        //
+        return view('loans.create');
     }
 
     /**
@@ -102,6 +104,9 @@ class LoanController extends Controller
         */
 
 
+        return redirect('/loans/'.$loan->id.'/view')
+                ->with(['message'=>'Loan saved successfully']); 
+
     }
 
     /**
@@ -112,7 +117,9 @@ class LoanController extends Controller
      */
     public function show($id)
     {
-        //
+        $loan = Loan::find($id);
+
+        return view('loans.show',['row'=>$loan]);
     }
 
     /**
@@ -143,9 +150,35 @@ class LoanController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * 
+     * -----------------------------------------------------------------
+     * STEPS
+     * ~~~~~
+     * [1] - Get the commission and loan models for deletion
+     * [2] - Update the STATUS property of commission model to DELETED/VOIDED
+     * [3] - Update the STATUS property of loan model to DELETED/VOIDED
+     * -----------------------------------------------------------------
      */
     public function destroy($id)
     {
-        //
+        $comm = Loan::find($id)->commission;
+        $loan = Loan::find($id);
+
+        //UPDATE commission model
+        $comm->status = "VOIDED";
+        //$comm->save();
+
+        //UPDATE loan model
+        $loan->status = "VOIDED";
+        //$loan->save();
+
+        //YOU CAN HAVE save() METHODS AS A TRANSACTION
+        DB::transaction(function() use ($comm, $loan) {
+            $comm->save(); 
+            $loan->save();
+        });
+
+        //return view('loans.list',['rows'=>$loans]);
+
     }
 }

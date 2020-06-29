@@ -55,9 +55,9 @@ class Loan extends Model
     /**
      * Get the commissions owned by this loan.
      */
-    public function commissions()
+    public function commission()
     {
-        return $this->hasMany('App\Commission', 'loan');
+        return $this->hasOne('App\Commission', 'loan');
 
     }
 
