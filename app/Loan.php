@@ -17,6 +17,15 @@ class Loan extends Model
     }
 
     /**
+     * Get the client that owns the loan.
+     */
+    public function client()
+    {
+        return $this->belongsTo('App\Client', 'client');
+
+    }
+
+    /**
      * Get the user who processed this loan.
      */
     public function processor()
