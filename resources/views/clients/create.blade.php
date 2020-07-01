@@ -16,16 +16,7 @@
                 <div class="card-body">
 
 
-                            <div class="card" style="margin:20px;margin-top:0px;padding:20px;">
-                                
-                                <h4 class="section-header">CLIENT DETAILS</h4>
-                                    <span><strong>Client Name</strong>   : Umali Leonard</span>
-                                    <span><strong>Client Number</strong> : 10001</span>
-                                    
-
-
-                            <!---end of card-->
-                            </div>
+                          
 
                     
                             <form method="POST" action="{{ route('loans.store') }}"   enctype="multipart/form-data">
@@ -33,7 +24,7 @@
 
                                 <div class="card" style="margin-left:20px;margin-right:20px;padding:20px;">
                     
-                                    <h4 class="section-header">LOAN DETAILS</h4>
+                                    <h4 class="section-header">CLIENT DETAILS</h4>
 
                                         <div class="form-group row">
                                             <label for="business_name" class="col-md-4 col-form-label text-md-right">{{ __('Type of Loan') }}</label>
@@ -91,7 +82,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="collateral" class="col-md-4 col-form-label text-md-right">{{ __('Collateral') }}</label>
+                                            <label for="collateral" class="col-md-4 col-form-label text-md-right">{{ __('ID Type') }}</label>
 
                                             <div class="col-md-6">
                                                 <input type="text" id="collateral" class="form-control @error('collateral') is-invalid @enderror" value="{{ old('collateral') }}" name="collateral" >
@@ -106,12 +97,12 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="collateral_attachment" class="col-md-4 col-form-label text-md-right">{{ __('Attach Collateral document') }}</label>
+                                            <label for="id_attachment" class="col-md-4 col-form-label text-md-right">{{ __('Attach ID document') }}</label>
 
                                             <div class="col-md-6">
-                                                <input id="collateral_attachment" type="file" class="form-control @error('collateral_attachment') is-invalid @enderror" name="collateral_attachment" value="{{ old('collateral_attachment') }}" autocomplete="collateral_attachment" >
+                                                <input id="id_attachment" type="file" class="form-control @error('id_attachment') is-invalid @enderror" name="id_attachment" value="{{ old('id_attachment') }}" autocomplete="id_attachment" >
 
-                                                @error('collateral_attachment')
+                                                @error('id_attachment')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>

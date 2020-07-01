@@ -1,0 +1,36 @@
+.content-header{
+    font-size:24px;
+    background-color: #f1ebc3;;
+    color:#109dde;
+}
+.content-header a{
+    color:white;
+}
+nav{
+    border-bottom: solid 6px #109dde;
+}
+nav .container{
+    font-size:25px;
+}
+.brand-name-1{
+    color:#109dde;
+    font-size:30px;
+}
+.brand-name-2{
+    color:#dec32a;
+    font-size:25px;
+    border-bottom: solid 1px #dec32a;
+}
+
+.section-header{
+    color:#dec32a;
+    font-size:20px;
+}
+.btn-primary{
+    color:#dec32a;
+    
+}
+.btn-primary:hover{
+    font-size:20px;
+    color:#dec32a;
+}
