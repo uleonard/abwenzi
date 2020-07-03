@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 use App\Loan;
 use App\LoanType;
 use App\Commission;
+use App\Client;
+use App\User;
+
 
 class LoanController extends Controller
 {
@@ -28,9 +32,18 @@ class LoanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('loans.create');
+        $client = Client::find($id);
+        $loan_types = LoanType::all();
+        $users = \App\User::all();
+        
+        return view('loans.create')
+            ->with([
+                'row'=>$client,
+                'loan_types'=>$loan_types,
+                'users'=>$users
+                ]);
     }
 
     /**
@@ -50,19 +63,24 @@ class LoanController extends Controller
      */
     public function store(Request $request)
     {
-        $loan_type = LoanType::find($resquest['loan_type']);
+        $loan_type = LoanType::find($request['loan_type']);
+
+        //return $request['loan_type'];
 
         /**Calculate the loan repayment due date from day of loan authorization */
-        $date = Carbon::createFromFormat('Y.m.d', $request['date_authorized']);
+        $date = Carbon::createFromFormat('Y-m-d', $request['date_authorized']);
         $due_date = $date->addDays($loan_type->duration);
         
         /**Calculate the interest rate for the loan obtained */
-        $interest = ($loan_type->interest / 100) * $request['amount'];
+        $interest = ($loan_type->interest_rate / 100) * $request['amount'];
          
-        $current_user = Auth::id();
+        //return [$due_date,$interest];
+
+        //$current_user = Auth::id();
+        $current_user = 1;
         
         $loan = new Loan;
-        $loan->loan_number = $loan_number;
+        $loan->number = 0;
         $loan->client = $request['client'];
         $loan->loan_type = $request['loan_type'];
         $loan->amount = $request['amount'];
@@ -70,14 +88,14 @@ class LoanController extends Controller
         $loan->date_applied = $request['date_applied'];
         $loan->processed_by = $request['processed_by'];
         $loan->date_processed = $request['date_processed'];
-        $loan->authorizedd_by = $request['authorized_by'];
+        $loan->authorized_by = $request['authorized_by'];
         $loan->date_authorized = $request['date_authorized'];
         $loan->due_date = $due_date;
         $loan->interest = $interest;
         $loan->balance = $request['amount'] + $interest;
         $loan->entered_by = $current_user;
         //SAVE AND RETURN THE AUTO INCREMENT ID;
-        $loan_id = $loan->save();
+        $loan->save();
 
         /**
          * IF THE PROCESSED_BY'S ROLE AN AGENT THEN ADD COMMISSION RECORD
@@ -85,16 +103,17 @@ class LoanController extends Controller
         $user = User::find($request['processed_by']);
         if($user->role=="AGENT"){
             /**CALCULATE THE COMMISSION */
-            $settings = Setting::where('setting','=','commission_rate')->last();
+            $settings = \App\Setting::where('setting','commission_rate')->latest('id')->first();
+           
             $comm_rate = $settings->value / 100;
             //ADD COMMISSION RECORD
             $com = new Commission;
             $com->agent = $user->id;
-            $com->loan = $loan_id; //Maybe this works also: $loan->id;
+            $com->loan = $loan->id; 
             $com->commission = $interest * $comm_rate; 
             $com->has_qualified = 0; 
             $com->is_paid = 0; 
-            $comm->save();
+            $com->save();
         }
 
 
@@ -104,7 +123,7 @@ class LoanController extends Controller
         */
 
 
-        return redirect('/loans/'.$loan->id.'/view')
+        return redirect('/loans/'.$loan->id)
                 ->with(['message'=>'Loan saved successfully']); 
 
     }

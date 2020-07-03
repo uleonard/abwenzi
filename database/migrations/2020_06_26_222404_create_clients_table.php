@@ -28,6 +28,8 @@ class CreateClientsTable extends Migration
             $table->integer('entered_by');
             $table->timestamps();
         });
+
+        \DB::statement('ALTER TABLE clients AUTO_INCREMENT = 10001;');
     }
 
     /**

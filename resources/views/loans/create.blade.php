@@ -19,8 +19,8 @@
                             <div class="card" style="margin:20px;margin-top:0px;padding:20px;">
                                 
                                 <h4 class="section-header">CLIENT DETAILS</h4>
-                                    <span><strong>Client Name</strong>   : Umali Leonard</span>
-                                    <span><strong>Client Number</strong> : 10001</span>
+                                    <span><strong>Client Name</strong>   : {{$row->firstname}} {{$row->surname}}</span>
+                                    <span><strong>Client Number</strong> : {{$row->id}}</span>
                                     
 
 
@@ -31,18 +31,20 @@
                             <form method="POST" action="{{ route('loans.store') }}"   enctype="multipart/form-data">
                                 @csrf
 
+                                <input type="hidden" name="client" value="{{$row->id}}">
+
                                 <div class="card" style="margin-left:20px;margin-right:20px;padding:20px;">
                     
                                     <h4 class="section-header">LOAN DETAILS</h4>
 
                                         <div class="form-group row">
-                                            <label for="business_name" class="col-md-4 col-form-label text-md-right">{{ __('Type of Loan') }}</label>
+                                            <label for="loan_type" class="col-md-4 col-form-label text-md-right">{{ __('Type of Loan') }}</label>
 
                                             <div class="col-md-6">
-                                                <select class="form-control">
-                                                    <option value="1">MTHANDIZI</option>
-                                                    <option value="2">MSAMALA</option>
-                                                    <option value="3">MAZIKO</option>
+                                                <select class="form-control" name="loan_type">
+                                                    @foreach($loan_types as $type)
+                                                        <option value="{{$type->id}}">{{$type->name}}</option>
+                                                    @endforeach
                                                 </select>
                                                 
                                             </div>
@@ -80,7 +82,7 @@
                                             <label for="date_applied" class="col-md-4 col-form-label text-md-right">{{ __('Date of application') }}</label>
 
                                             <div class="col-md-6">
-                                                <input id="date_applied" type="text" class="form-control @error('date_applied') is-invalid @enderror" name="date_applied" value="{{ old('date_applied') }}" required autocomplete="date_applied" >
+                                                <input id="date_applied" type="date" class="form-control @error('date_applied') is-invalid @enderror" name="date_applied" value="{{ old('date_applied') }}" required autocomplete="date_applied" >
 
                                                 @error('date_applied')
                                                     <span class="invalid-feedback" role="alert">
@@ -126,7 +128,69 @@
                                     <!-- END OF INNER CARD-->
                                 </div>
 
-                                
+                            
+                                <div class="card" style="margin-left:20px;margin-right:20px;padding:20px;">
+                    
+                                    <h4 class="section-header">OFFICIAL USE</h4>
+
+                                        <div class="form-group row">
+                                            <label for="processed_by" class="col-md-4 col-form-label text-md-right">{{ __('Processed By') }}</label>
+
+                                            <div class="col-md-6">
+                                                <select class="form-control" name="processed_by">
+                                                    @foreach($users as $user)
+                                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                
+                                            </div>
+                                        </div>
+
+                                                                                <div class="form-group row">
+                                            <label for="date_processed" class="col-md-4 col-form-label text-md-right">{{ __('Date Processed') }}</label>
+
+                                            <div class="col-md-6">
+                                                <input id="date_processed" type="date" class="form-control @error('date_processed') is-invalid @enderror" name="date_processed" value="{{ old('date_processed') }}" required autocomplete="date_processed" >
+
+                                                @error('date_processed')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="authorized_by" class="col-md-4 col-form-label text-md-right">{{ __('Authorizedd By') }}</label>
+
+                                            <div class="col-md-6">
+                                                <select class="form-control" name="authorized_by">
+                                                    @foreach($users as $user)
+                                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                
+                                            </div>
+                                        </div>
+
+                                                                                <div class="form-group row">
+                                            <label for="date_authorized" class="col-md-4 col-form-label text-md-right">{{ __('Date Authorized') }}</label>
+
+                                            <div class="col-md-6">
+                                                <input id="date_authorized" type="date" class="form-control @error('date_authorized') is-invalid @enderror" name="date_authorized" value="{{ old('date_authorized') }}" required autocomplete="date_authorized" >
+
+                                                @error('date_authorized')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+
+                                    <!-- END OF INNER CARD-->
+                                </div>
+
                                 
                                 <div class="card" style="margin:20px;padding:20px;">
                     

@@ -18,11 +18,19 @@ Route::get('/', function () {
 });
 
 
+
+
 Route::resources([
-    'loans' => 'LoanController',
+    //'loans' => 'LoanController',
     'clients' => 'ClientController',
     'repayments' => 'RepaymentController'
 ]);
+
+Route::resource('loans', 'LoanController')->except([
+    'update', 'edit'
+]);
+
+Route::get('/loans/{id}/create', 'LoanController@create');
 
 //Route::get('/loans/types', 'LoanTypeController@index');
 //Route::post('/loans/types', 'LoanTypeController@store');

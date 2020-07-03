@@ -16,7 +16,7 @@ class CreateLoanAttachmentsTable extends Migration
         Schema::create('loan_attachments', function (Blueprint $table) {
             $table->id();
             $table->integer('loan');
-            $table->string('type');
+            $table->string('name');
             $table->string('attachment');
             $table->timestamps();
         });

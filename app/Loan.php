@@ -10,7 +10,7 @@ class Loan extends Model
     /**
      * Get the loan type that owns the loan.
      */
-    public function loan_type()
+    public function type()
     {
         return $this->belongsTo('App\LoanType', 'loan_type');
 
@@ -19,7 +19,7 @@ class Loan extends Model
     /**
      * Get the client that owns the loan.
      */
-    public function client()
+    public function owner()
     {
         return $this->belongsTo('App\Client', 'client');
 
