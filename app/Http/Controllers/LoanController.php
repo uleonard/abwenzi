@@ -22,8 +22,15 @@ class LoanController extends Controller
     public function index()
     {
         $loans = Loan::all();
+        $users = User::all();
 
-        return view('loans.index',['rows'=>$loans]);
+        return view('loans.index',
+                [
+                    'rows'=>$loans,
+                    'users'=>$users,
+                    'year'=>date('Y'),
+                    'month'=>date('m')
+                ]);
         //return $loans;
     }
 
@@ -142,26 +149,40 @@ class LoanController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Search the resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
+     * ----------------------------------------------------------------
+     * STEPS
+     * ~~~~~~~~
+     * [1] - Search by Date .....
+     * 
+     * ------------------------------------------------------------------
      */
-    public function update(Request $request, $id)
+    public function search(Request $request)
     {
-        //
+        $date = $request['year'] . '-' . $request['month'] . '-%';
+        $year = $request['year'];
+        $month = $request['month'];
+        $loan_number = '%' . $request['search'] . '%';
+        $client = $request['search'];
+        $processed_by = $request['processed_by'];
+        $authorized_by = $request['authorized_by'];
+
+        $loans = Loan::whereYear('date_authorized',$year)
+                        ->whereMonth('date_authorized',$month)
+                        ->get();
+
+        $users = User::all();
+
+        return view('loans.index',
+                [
+                    'rows'=>$loans,
+                    'users'=>$users,
+                    'year'=>$year,
+                    'month'=>$month
+                ]);
     }
 
     /**

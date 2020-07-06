@@ -31,6 +31,7 @@ Route::resource('loans', 'LoanController')->except([
 ]);
 
 Route::get('/loans/{id}/create', 'LoanController@create');
+Route::post('/loans/search', 'LoanController@search')->name('loans.search');
 
 //Route::get('/loans/types', 'LoanTypeController@index');
 //Route::post('/loans/types', 'LoanTypeController@store');
