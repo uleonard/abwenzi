@@ -9,7 +9,7 @@ class Commission extends Model
     /**
      * Get the user (agent) for this commission.
      */
-    public function agent()
+    public function user()
     {
         return $this->belongsTo('App\User', 'agent');
 
@@ -18,7 +18,7 @@ class Commission extends Model
     /**
      * Get the loan that owns this commission.
      */
-    public function loan()
+    public function comm_loan()
     {
         return $this->belongsTo('App\Loan', 'loan');
 

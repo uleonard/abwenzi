@@ -8,8 +8,11 @@ use Carbon\Carbon;
 use App\Loan;
 use App\LoanType;
 use App\Commission;
+use App\Expense;
 use App\Client;
 use App\User;
+
+use Auth;
 
 
 class LoanController extends Controller
@@ -65,7 +68,8 @@ class LoanController extends Controller
      * [1] - Calculates due date and interest rate
      * [2] - Save the loan model
      * [3] - If this client is through an agent, then calculate and save agent's commission
-     * [4] - Send email to the client about the loan processed
+     * [4] - If step 3 TRUE, then add commission as an expense in Expense Model 
+     * [5] - Send email to the client about the loan processed
      * ----------------------------------------------------------------
      */
     public function store(Request $request)
@@ -83,8 +87,8 @@ class LoanController extends Controller
          
         //return [$due_date,$interest];
 
-        //$current_user = Auth::id();
-        $current_user = 1;
+        $current_user = Auth::id();
+        //$current_user = 1;
         
         $loan = new Loan;
         $loan->number = 0;
@@ -113,14 +117,30 @@ class LoanController extends Controller
             $settings = \App\Setting::where('setting','commission_rate')->latest('id')->first();
            
             $comm_rate = $settings->value / 100;
+            $commission = $interest * $comm_rate;
             //ADD COMMISSION RECORD
             $com = new Commission;
             $com->agent = $user->id;
             $com->loan = $loan->id; 
-            $com->commission = $interest * $comm_rate; 
+            $com->commission = $commission; 
             $com->has_qualified = 0; 
             $com->is_paid = 0; 
             $com->save();
+
+
+            /**STEP 4: ADD COMMISSION TO THE EXPENSE MODEL */
+
+            //Get the first category (FIRST CATEGORY SHOULD BE SALRIES AND WAGES)
+            $c = \App\ExpenseCategory::all()->first();
+            $expense = new Expense;
+            $expense->category = $c->id;
+            $expense->trans_date = $request['date_authorized'];
+            $expense->description = "Commission: agent [".$loan->processor->name ."]";
+            $expense->amount = $commission;
+            $expense->entered_by = $current_user;
+
+            $expense->save();
+
         }
 
 

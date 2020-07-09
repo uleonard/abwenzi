@@ -14,7 +14,43 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return "ZIKOMO";
+        $clients = Client::all();
+        return view('clients.index')
+               ->with([
+                    'rows'=>$clients,
+                    'search'=>""
+                ]);
+    }
+
+
+    /**
+     * Search the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     * ----------------------------------------------------------------
+     * STEPS
+     * ~~~~~~~~
+     * [1] - Search by Date .....
+     * 
+     * ------------------------------------------------------------------
+     */
+    public function search(Request $request)
+    {
+        $firstname = $request['search'];
+        $surname = $request['search'];
+        $client_id = $request['search'];
+
+        $clients = Client::where('id',$client_id)
+                        ->orWhere('surname','LIKE','%'.$surname.'%')
+                        ->orWhere('firstname','LIKE','%'.$firstname.'%')
+                        ->get();
+
+        return view('clients.index',
+                [
+                    'rows'=>$clients,
+                    'search'=>$request->search
+                ]);
     }
 
     /**
@@ -37,15 +73,11 @@ class ClientController extends Controller
     public function store(Request $request)
     {
                 
-        /*
+        
         $request->validate([
-            'business_name' => 'required',
-            'owner_name' => 'required',
-            'business_licence' => 'mimes:pdf,jpg,png|max:2048',
-            'tax_clearance' => 'mimes:pdf,jpg,png|max:2048',
-            'registration_certificate' => 'mimes:pdf,jpg,png|max:2048',
+           'id_attachment' => 'required|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
-        */
+        
     
        // $track_password = time();
         $id_attachment = time().'.'.$request->id_attachment->extension();  
@@ -88,7 +120,10 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        //
+        $client = Client::find($id);
+
+        return view('clients.show',['row'=>$client]);
+
     }
 
     /**
