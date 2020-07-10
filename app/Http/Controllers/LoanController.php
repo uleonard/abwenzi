@@ -11,6 +11,7 @@ use App\Commission;
 use App\Expense;
 use App\Client;
 use App\User;
+use App\Cash;
 
 use Auth;
 

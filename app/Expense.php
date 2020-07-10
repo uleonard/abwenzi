@@ -9,7 +9,7 @@ class Expense extends Model
     /**
      * Get the expense category that owns this expense.
      */
-    public function category()
+    public function expense_category()
     {
         return $this->belongsTo('App\ExpenseCategory', 'category');
 

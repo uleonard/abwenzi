@@ -12,8 +12,8 @@
 </style>
 @section('content')      
 
-        <div class="col-md-12">
-            <div class="card">
+    <div class="col-md-12">
+        <div class="card">
                 <div class="card-header content-header">Dashboard - Welcome Umali Leonard</div>
 
                 <div class="card-body">
@@ -68,7 +68,7 @@
                              </a>
                         </div>
                         <div class="card">   
-                            <a href="#" >                           
+                            <a href="{{route('cash.index')}}" >                           
                                 <div class="card-body text-center">
                                     <div class="card-text">
                                         <i class="fa fa-ban fa-2x"></i><br>Cash Flow
@@ -79,7 +79,7 @@
                     </div>
                     <div class="card-columns">                            
                         <div class="card">   
-                            <a href="{{route('home')}}" >                           
+                            <a href="{{route('expenses.index')}}" >                           
                                 <div class="card-body text-center">
                                     <div class="card-text">
                                         <i class="fa fa-user fa-2x"></i><br>Expenses
@@ -140,8 +140,7 @@
                 </div>
 
             </div>
-
-
         </div>
+    </div>
 
 @endsection

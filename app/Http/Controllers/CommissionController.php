@@ -156,7 +156,7 @@ class CommissionController extends Controller
         $cash->trans_date = $trans_date;
         $cash->description = $description;
         $cash->entry = "CR";
-        $cash->amount = $comm->commission;
+        $cash->amount = 0-$comm->commission;
         $cash->balance = $balance;
         $cash->entered_by = $current_user;
         $cash->save();
