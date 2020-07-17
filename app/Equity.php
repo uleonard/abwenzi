@@ -9,7 +9,7 @@ class Equity extends Model
     /**
      * Get the shareholder that owns this equity.
      */
-    public function shareholder()
+    public function owned_by()
     {
         return $this->belongsTo('App\Shareholder', 'shareholder');
 

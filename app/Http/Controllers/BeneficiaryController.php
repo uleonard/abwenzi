@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Expense;
-use App\ExpenseCategory;
+use App\Beneficiary;
 use Auth;
 use Session;
 
-class ExpensesController extends Controller
+class BeneficiaryController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -21,6 +19,7 @@ class ExpensesController extends Controller
         $this->middleware('auth');
     }
 
+    
     /**
      * Display a listing of the resource.
      *
@@ -28,31 +27,7 @@ class ExpensesController extends Controller
      */
     public function index()
     {
-        $rows = Expense::all();
-
-        return view('expenses.index',
-                [
-                    'rows'=>$rows,
-                    'year'=>date('Y'),
-                    'month'=>date('m')
-                ]);
-    }
-
-    public function search(Request $request)
-    {
-        $month = $request->month;
-        $year = $request->year;
-        
-        $rows = Expense::whereYear('trans_date',$year)
-                      ->whereMonth('trans_date',$month)
-                      ->get();
-                      
-        return view('expenses.index',
-                [
-                    'rows'=>$rows,
-                    'year'=>$year,
-                    'month'=>$month
-                ]);
+        //
     }
 
     /**
@@ -62,8 +37,7 @@ class ExpensesController extends Controller
      */
     public function create()
     {
-        $expenses = ExpenseCategory::all();
-        return view('expenses.create',['rows'=>$expenses]);
+        //
     }
 
     /**
@@ -74,29 +48,22 @@ class ExpensesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'trans_date' => 'required',
-            'description' => 'required',
-            'category' => 'required',
-            'amount' => 'required|numeric',
-         ]);
-        
         $current_user = Auth::id();
-        
-        $expense = new Expense;
-        $expense->category = $request->category;
-        $expense->trans_date = $request->trans_date;
-        $expense->description = $request->description;
-        $expense->amount = $request->amount;
-        $expense->entered_by = $current_user;
-        $expense->save();
 
-        
-        Session::flash('message', 'New expense added'); 
+        $ben = new Beneficiary;
+        $ben->shareholder=$request->shareholder;
+        $ben->firstname=$request->firstname;
+        $ben->surname=$request->surname;
+        $ben->dob=$request->dob;
+        $ben->relationship=$request->relationship;
+        $ben->percent=$request->percent;
+        $ben->entered_by=$current_user;
+        $ben->save();
+
+        Session::flash('message', 'Beneficiary created successfully'); 
         Session::flash('alert-class', 'alert-success'); 
 
-        return redirect('/expenses');
-
+        return redirect('/shareholders/'.$request->shareholder);
 
     }
 

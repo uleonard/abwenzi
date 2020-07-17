@@ -6,7 +6,31 @@ use Illuminate\Database\Eloquent\Model;
 
 class Loan extends Model
 {
+    private $formatted_amount;
+    private $formatted_interest;
+    private $formatted_balance;
+
+    protected $dates = ['due_date','date_processed','date_authorized','date_applied'];
     
+    /**
+     * Get formatted amount
+     */
+    public function getFormattedAmountAttribute(){
+        return number_format($this->attributes['amount'],2);
+    }
+    /**
+     * Get formatted Interest
+     */
+    public function getFormattedInterestAttribute(){
+        return number_format($this->attributes['interest'],2);
+    }
+    /**
+     * Get formatted Interest
+     */
+    public function getFormattedBalanceAttribute(){
+        return number_format($this->attributes['balance'],2);
+    }
+
     /**
      * Get the loan type that owns the loan.
      */

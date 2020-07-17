@@ -14,6 +14,17 @@ use Session;
 class CommissionController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -139,6 +150,7 @@ class CommissionController extends Controller
 
          $comm = Commission::find($commission);
          $comm->is_paid = 1;
+         $comm->date_paid = date('Y-m-d');
          $comm->save();
 
         /**STEP 2: CREATE A CASH RESOURCE */

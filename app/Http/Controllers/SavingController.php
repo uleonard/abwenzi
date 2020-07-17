@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Expense;
-use App\ExpenseCategory;
+use App\Savings;
 use Auth;
 use Session;
 
-class ExpensesController extends Controller
+class SavingController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -28,31 +26,7 @@ class ExpensesController extends Controller
      */
     public function index()
     {
-        $rows = Expense::all();
-
-        return view('expenses.index',
-                [
-                    'rows'=>$rows,
-                    'year'=>date('Y'),
-                    'month'=>date('m')
-                ]);
-    }
-
-    public function search(Request $request)
-    {
-        $month = $request->month;
-        $year = $request->year;
-        
-        $rows = Expense::whereYear('trans_date',$year)
-                      ->whereMonth('trans_date',$month)
-                      ->get();
-                      
-        return view('expenses.index',
-                [
-                    'rows'=>$rows,
-                    'year'=>$year,
-                    'month'=>$month
-                ]);
+        //
     }
 
     /**
@@ -62,8 +36,7 @@ class ExpensesController extends Controller
      */
     public function create()
     {
-        $expenses = ExpenseCategory::all();
-        return view('expenses.create',['rows'=>$expenses]);
+        //
     }
 
     /**
@@ -74,30 +47,25 @@ class ExpensesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'trans_date' => 'required',
-            'description' => 'required',
-            'category' => 'required',
-            'amount' => 'required|numeric',
-         ]);
-        
         $current_user = Auth::id();
-        
-        $expense = new Expense;
-        $expense->category = $request->category;
-        $expense->trans_date = $request->trans_date;
-        $expense->description = $request->description;
-        $expense->amount = $request->amount;
-        $expense->entered_by = $current_user;
-        $expense->save();
+        $amount = $request->amount;
+        if($request->entry == "WITHDRAW")
+            $amount = 0-$amount;
+
+        $savings = new Savings;
+        $savings->shareholder = $request->shareholder;
+        $savings->trans_date = $request->trans_date;
+        $savings->entry = $request->entry;
+        $savings->amount = $amount;
+        $savings->comment = $request->comment;
+        $savings->entered_by = $current_user;
+        $savings->save();
 
         
-        Session::flash('message', 'New expense added'); 
+        Session::flash('message', 'Equity (sahres) added successfully'); 
         Session::flash('alert-class', 'alert-success'); 
 
-        return redirect('/expenses');
-
-
+        return redirect('/shareholders/'.$request->shareholder);
     }
 
     /**

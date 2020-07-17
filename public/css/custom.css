@@ -26,15 +26,35 @@ nav .container{
     color:#dec32a;
     font-size:20px;
 }
-.btn-primary{
-    color:#dec32a;
+
+
+.btn-default{
+    color:#7c754e;
+    border: solid 1px #dec32a;
     
 }
-.btn-primary:hover{
-    font-size:20px;
+.btn-default:hover{
+    /*font-size:20px;*/
     color:#dec32a;
 }
 
 i{
     color:#dec32a; 
+}
+
+thead,.section .card-header{
+    /** background-color:#7c754e; **/
+    background-color:#7c754e;
+    color:white;
+    
+   
+}
+thead th{
+    font-size:16px;color:#FFFFFF;
+}
+
+.badge{
+    /*color:#dec32a;*/
+    color:#7c754e;
+    font-size:14px;
 }

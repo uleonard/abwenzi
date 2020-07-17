@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 
@@ -35,6 +35,8 @@ Route::resource('loans', 'LoanController')->except([
 
 Route::get('/loans/{id}/create', 'LoanController@create')->name('loans.create');
 Route::post('/loans/search', 'LoanController@search')->name('loans.search');
+
+Route::post('/loans/attachments/store', 'LoanAttachmentController@store')->name('loans.attachments.store');
 
 /**
  * Clients  and Commissions Routes
@@ -58,6 +60,33 @@ Route::get('/exp/categories/create', 'ExpenseCategoryController@create')->name('
 Route::post('/exp/categories/store', 'ExpenseCategoryController@store')->name('expenses.categories.store');
 Route::post('/exp/categories/{id}/update', 'ExpenseCategoryController@update')->name('expenses.categories.update');
 
+
+/**
+ * Routes for Shareholders
+ */
+
+Route::get('/shareholders', 'ShareholderController@index')->name('shareholders.index');
+Route::get('/shareholders/create', 'ShareholderController@create')->name('shareholders.create');
+Route::post('/shareholders', 'ShareholderController@store')->name('shareholders.store');
+Route::get('/shareholders/{id}', 'ShareholderController@show')->name('shareholders.show');
+Route::get('/shareholders/edit', 'ShareholderController@edit')->name('shareholders.edit');
+Route::post('/shareholders/search', 'ShareholderController@search')->name('shareholders.search');
+
+/**
+ * Routes for Beneficiaries
+ */
+
+Route::post('/beneficiaries', 'BeneficiaryController@store')->name('beneficiaries.store');
+
+/**
+ * Routes for Equities and Savings
+ */
+
+Route::get('/equities', 'EquityController@index')->name('equities.index');
+Route::post('/equities', 'EquityController@store')->name('equities.store');
+Route::post('/equities/search', 'EquityController@search')->name('equities.search');
+Route::get('/equities/void', 'EquityController@destroy')->name('equities.destroy');
+Route::post('/savings', 'SavingController@store')->name('savings.store');
 
 //Route::get('/loans/types', 'LoanTypeController@index');
 //Route::post('/loans/types', 'LoanTypeController@store');

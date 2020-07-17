@@ -19,6 +19,16 @@ use Auth;
 class LoanController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -186,14 +196,35 @@ class LoanController extends Controller
         $date = $request['year'] . '-' . $request['month'] . '-%';
         $year = $request['year'];
         $month = $request['month'];
-        $loan_number = '%' . $request['search'] . '%';
+        $loan_number = $request['search'];
         $client = $request['search'];
-        $processed_by = $request['processed_by'];
-        $authorized_by = $request['authorized_by'];
+        //$processed_by = $request['processed_by'];
+        //$authorized_by = $request['authorized_by'];
 
-        $loans = Loan::whereYear('date_authorized',$year)
-                        ->whereMonth('date_authorized',$month)
-                        ->get();
+        $loans = [];
+
+        if(!$request->search == ""){
+            $loans = Loan::whereHas('owner', function($q) use ($client){
+                                    $q->where('surname','LIKE','%'.$client.'%');
+                                })
+                            ->orWhere('id',$loan_number)
+                            ->get();
+        }
+        
+        else if($request->month == "--"){
+            $loans = Loan::whereYear('date_authorized',$year)
+                            //->where('id','LIKE', $loan_number.'%')
+                           // ->whereHas('owner', function($q) use ($client){
+                            //        $q->where('surname','LIKE','%'.$client.'%');
+                            //    })
+                            ->get();
+        }
+        else  {
+            $loans = Loan::whereYear('date_authorized',$year)
+                            ->whereMonth('date_authorized',$month)
+                            //->where('id','LIKE', $loan_number.'%')
+                            ->get();
+        }
 
         $users = User::all();
 
@@ -202,7 +233,8 @@ class LoanController extends Controller
                     'rows'=>$loans,
                     'users'=>$users,
                     'year'=>$year,
-                    'month'=>$month
+                    'month'=>$month,
+                    'search'=>$loan_number,
                 ]);
     }
 

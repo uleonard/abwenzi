@@ -4,20 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Cash;
+use App\LoanAttachment;
 
-class CashController extends Controller
+class LoanAttachmentController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -25,31 +15,7 @@ class CashController extends Controller
      */
     public function index()
     {
-        $rows = Cash::all();
-
-        return view('cash.index',
-                [
-                    'rows'=>$rows,
-                    'year'=>date('Y'),
-                    'month'=>date('m')
-                ]);
-    }
-
-    public function search(Request $request)
-    {
-        $month = $request->month;
-        $year = $request->year;
-        
-        $rows = Cash::whereYear('trans_date',$year)
-                      ->whereMonth('trans_date',$month)
-                      ->get();
-
-        return view('cash.index',
-                [
-                    'rows'=>$rows,
-                    'year'=>$year,
-                    'month'=>$month
-                ]);
+        //
     }
 
     /**
@@ -70,7 +36,29 @@ class CashController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'attachment' => 'required|mimes:pdf,jpg,jpeg,png|max:2048',
+            'name' => 'required',
+         ]);
+         
+     
+         $attachment = time().'.'.$request->attachment->extension();  
+         
+         /*******
+          * UPLOAD THE ATTACHMENT
+         */ 
+         $request->attachment->move(public_path('storage/loans'), $attachment);
+        
+          
+         $loan_att = new LoanAttachment;
+         $loan_att->name = $request['name'];
+         $loan_att->loan = $request['loan'];
+         $loan_att->attachment = $attachment;
+         
+         $loan_att->save();
+ 
+ 
+         return redirect("loans/".$request['loan']);
     }
 
     /**

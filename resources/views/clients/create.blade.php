@@ -6,13 +6,23 @@
 </style>
 @section('content')
 
+<div class="col-md-12 container">
+    <div class="card"> 
+        <div class="card-header content-header">Clients / New Client</div>
+        <div>
+            <a href="{{route('clients.index')}}">
+                <i class="fa fa-arrow-left"></i>Back
+            </a>
+        </div>
+    </div>
+</div>
+  
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header content-header">Client Registration</div>
-
+               
                 <div class="card-body">
 
 
@@ -208,7 +218,7 @@
                     
                                     <div class="form-group row mb-0">
                                         <div class="col-md-6 offset-md-4">
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" class="btn btn-default">
                                                 SAVE & NEXT
                                             </button>
                                         </div>

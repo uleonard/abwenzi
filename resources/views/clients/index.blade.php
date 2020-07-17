@@ -5,14 +5,19 @@
     }
 </style>
 @section('content')
-    <div class="card-header content-header">Clients</div>
-    <div class="row">                
-
-                <div class="col-md-12">
-                    <div class="card">
+<div class="col-md-12">
+    <div class="card"> 
+        <div class="card-header content-header">Clients</div>
+        <div>
+            <a href="{{route('home')}}">
+                <i class="fa fa-arrow-left"></i>Back
+            </a>
+            | <a href="{{route('clients.create')}}"> <i class="fa fa-plus"></i>New Client</a>
+        </div>
+                   <div class="card">
 
                         <div>
-                            <a href="{{route('clients.create')}}">New Client</a>
+                            
 
                             <form method="POST" action="{{ route('clients.search') }}" class="form form-inline">
                                 @csrf                                             
@@ -51,7 +56,11 @@
                                     <td>{{$row->physical_address}}</td>
                                     <td>{{$row->phone}} | {{$row->phone_other}}</td>
                                     <td>{{$row->email}}</td>
-                                    <td><a href="{{route('loans.create',['id'=>$row->id])}}">new loan</a></td>
+                                    <td><a href="{{route('loans.create',['id'=>$row->id])}}" 
+                                            data-toggle="tooltip" data-placement="bottom" title="New loan">
+                                            <i class="fa fa-plus"></i><i class="fa fa-dollar"></i> 
+                                        </a>
+                                    </td>
                                 </tr>
                                 @endforeach
                                 </tbody>
@@ -62,4 +71,11 @@
                     </div>
                 </div>
         </div>
+
+        
+        <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();   
+            });
+        </script>
 @endsection

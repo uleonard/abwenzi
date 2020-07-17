@@ -8,11 +8,15 @@
     }
 </style>
 @section('content')
-    <div class="card-header content-header">Commissions</div>
-    <div class="row">                
-
-                <div class="col-md-12">
-
+<div class="col-md-12">
+    <div class="card"> 
+        <div class="card-header content-header">Commissions</div>
+        <div>
+            <a href="{{route('home')}}">
+                <i class="fa fa-arrow-left"></i>Back
+            </a>
+            | <a href="{{route('clients.create')}}"> <i class="fa fa-plus"></i>New Client</a>
+        </div>
                     <div class="card">
                         @if(Session::has('message'))
                         <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
@@ -92,7 +96,7 @@
                                 <?php $total_comm = 0;?>
                                 @foreach($rows as $row)
                                 <tr>
-                                    <td><a href="{{route('commissions.show',['commission'=>$row->id])}}">{{$count++}}</a></td>
+                                    <td>{{$count++}}</td>
                                     <td>{{$row->user->name}}</td>
                                     <td>{{$row->comm_loan->owner->surname . " " . $row->comm_loan->owner->firstname}}</td>
                                     <td class="number">{{number_format($row->comm_loan->amount, 2)}}</td>

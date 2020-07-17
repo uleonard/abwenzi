@@ -9,9 +9,9 @@ class Savings extends Model
       /**
      * Get the shareholder that owns this savings.
      */
-    public function shareholder()
+    public function owned_by()
     {
-        return $this->belongsTo('App\Savings', 'shareholder');
+        return $this->belongsTo('App\Shareholder', 'shareholder');
 
     }
 

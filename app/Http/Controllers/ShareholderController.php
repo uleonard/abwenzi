@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Expense;
-use App\ExpenseCategory;
-use Auth;
+use App\Shareholder;
 use Session;
 
-class ExpensesController extends Controller
+class ShareholderController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -28,31 +25,22 @@ class ExpensesController extends Controller
      */
     public function index()
     {
-        $rows = Expense::all();
+        $shareholders = Shareholder::all();
 
-        return view('expenses.index',
-                [
-                    'rows'=>$rows,
-                    'year'=>date('Y'),
-                    'month'=>date('m')
-                ]);
+        return view('shareholders.index',['rows'=>$shareholders]);
     }
 
     public function search(Request $request)
     {
-        $month = $request->month;
-        $year = $request->year;
-        
-        $rows = Expense::whereYear('trans_date',$year)
-                      ->whereMonth('trans_date',$month)
-                      ->get();
-                      
-        return view('expenses.index',
-                [
-                    'rows'=>$rows,
-                    'year'=>$year,
-                    'month'=>$month
-                ]);
+        $surname = $request->search;
+        $firstname = $request->search;
+
+        $rows = Shareholder::where('surname','LIKE','%'.$surname.'%')
+                            ->orWhere('firstname','LIKE','%'.$firstname.'%')
+                            ->get();
+
+        return view('shareholders.index',['rows'=>$rows]);
+
     }
 
     /**
@@ -62,8 +50,7 @@ class ExpensesController extends Controller
      */
     public function create()
     {
-        $expenses = ExpenseCategory::all();
-        return view('expenses.create',['rows'=>$expenses]);
+        //
     }
 
     /**
@@ -75,29 +62,25 @@ class ExpensesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'trans_date' => 'required',
-            'description' => 'required',
-            'category' => 'required',
-            'amount' => 'required|numeric',
+            'firstname' => 'required',
+            'surname' => 'required',
+            'gender' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
          ]);
-        
-        $current_user = Auth::id();
-        
-        $expense = new Expense;
-        $expense->category = $request->category;
-        $expense->trans_date = $request->trans_date;
-        $expense->description = $request->description;
-        $expense->amount = $request->amount;
-        $expense->entered_by = $current_user;
-        $expense->save();
 
-        
-        Session::flash('message', 'New expense added'); 
+        $shareholder = new Shareholder;
+        $shareholder->firstname = $request->firstname;
+        $shareholder->surname = $request->surname;
+        $shareholder->gender = $request->gender;
+        $shareholder->phone = $request->phone;
+        $shareholder->email = $request->email;
+        $shareholder->save();
+
+        Session::flash('message', 'Shareholder created successfully'); 
         Session::flash('alert-class', 'alert-success'); 
 
-        return redirect('/expenses');
-
-
+        return redirect('/shareholders');
     }
 
     /**
@@ -108,7 +91,9 @@ class ExpensesController extends Controller
      */
     public function show($id)
     {
-        //
+        $shareholder = Shareholder::find($id);
+
+        return view('shareholders.show',['row'=>$shareholder]);
     }
 
     /**

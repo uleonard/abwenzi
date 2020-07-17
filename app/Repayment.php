@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Repayment extends Model
 {
+    protected $dates = ['date_paid'];
     /**
      * Get the user who entered this repayment.
      */
