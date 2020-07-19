@@ -10,6 +10,11 @@
 <div class="col-md-12">
     <div class="card"> 
         <div class="card-header content-header">Loans</div>
+        <div>
+            <a href="{{route('home')}}">
+                <i class="fa fa-arrow-left"></i>Go Back
+            </a>
+        </div>
             <div class="card" style="margin-top:5px;">
                 <form method="POST" action="{{ route('loans.search') }}" class="form form-inline">
                     @csrf  
@@ -49,7 +54,7 @@
                         @endforeach
                     </select>
                     -->
-                    <input type="submit" value="Search" class="btn btn-primary">
+                    <input type="submit" value="Search" class="btn btn-default">
 
                 </form>
             </div>
@@ -75,7 +80,30 @@
                     <tbody>
                     <?php $count = 1;?>
                     @foreach($rows as $row)
-                    <tr>
+                        <?php 
+                                //Reference: https://stackoverflow.com/questions/52884922/laravel-display-difference-between-two-dates-in-blade/52885035
+
+                                $days = round((strtotime($row->due_date) - time()) / 86400) + 1;
+                                $days_to_due = "";
+                                $class = "";
+                                if($days<=5 && $row->balance>0)
+                                    $class = "alert alert-warning";
+
+                                if($days>0)
+                                    $days_to_due =  $days;
+                                else if($days==0){
+                                    $days_to_due = "Due";
+                                    $class="alert alert-dark";
+                                }
+                                else if($row->balance>0){
+                                    $days_to_due = "Past due";
+                                    $class="alert alert-danger";
+                                }
+                                else
+                                    $days_to_due = "--";
+                            ?>
+                            
+                    <tr class="{{$class}}">
                         <td><a href="{{route('loans.show',['loan'=>$row->id])}}">{{$count++}}</a></td>
                         <td>{{$row->owner->surname." ".$row->owner->firstname}}</td>
                         <td>{{$row->date_applied->format('d M Y')}}</td>
@@ -88,21 +116,7 @@
                         <td>{{$row->processor->name}}</td>
                         <td>{{$row->date_authorized->format('d M Y')}}</td>
                         <td>{{$row->authorizer->name}}</td>
-                        <td>
-                            <?php 
-                                //Reference: https://stackoverflow.com/questions/52884922/laravel-display-difference-between-two-dates-in-blade/52885035
-
-                                $days = round((strtotime($row->due_date) - time()) / 86400);
-                                if($days>0)
-                                    echo $days;
-                                else if($row->balance>0)
-                                    echo "Past due";
-                                else
-                                    echo "--";
-                            ?>
-                            
-                        
-                        </td>
+                        <td>{{$days_to_due}}</td>
                         
                     </tr>
                     @endforeach

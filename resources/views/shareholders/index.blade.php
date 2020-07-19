@@ -18,9 +18,12 @@
             <div class="card"> 
                 <div class="card-header content-header">Shareholders</div>
                     <div>
+                    <a href="{{route('home')}}">
+                        <i class="fa fa-arrow-left"></i>Go Back  
+                    </a> / 
                     <a href="#" data-toggle="modal" data-target="#modal-create" style="cursor:grab;">
-                        <i class="fa fa-plus"></i>New Shareholder
-                    </a>
+                        <i class="fa fa-plus"></i>New Shareholder 
+                    </a> / 
 
                     <a href="{{route('equities.index')}}">
                         <i class="fa fa-reorder"></i>Equity & Savings

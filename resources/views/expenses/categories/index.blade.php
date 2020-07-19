@@ -14,8 +14,8 @@
             <div class="card"> 
             <div class="card-header content-header">Expenses / Categories</div>
                     <div>
-                        <a href="{{route('expenses.index')}}"><i class="fa fa-arrow-left"></i> Go to expenses</a> /
-                        <i class="fa fa-plus"></i> <a href="{{route('expenses.create')}}">New Category</a>
+                        <a href="{{route('expenses.index')}}"><i class="fa fa-arrow-left"></i> Go to expenses</a> 
+                        
                     </div>
 
                     <div class="card">

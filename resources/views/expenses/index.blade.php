@@ -14,8 +14,15 @@
             <div class="card"> 
             <div class="card-header content-header">Expenses</div>
                     <div>
-                        <a href="{{route('expenses.categories.index')}}">Categories</a>
-                        <a href="{{route('expenses.create')}}">New Expense</a>
+                        <a href="{{route('home')}}">
+                            <i class="fa fa-arrow-left"></i>Go Back
+                        </a>
+                        <a href="{{route('expenses.categories.index')}}">
+                            <i class="fa fa-reorder"></i>Categories
+                        </a>
+                        <a href="{{route('expenses.create')}}">
+                            <i class="fa fa-plus"></i>New Expense
+                        </a>
                     </div>
 
                     <div class="card">
@@ -76,7 +83,7 @@
                                 <?php $total = 0;?>
                                 @foreach($rows as $row)
                                 <tr>
-                                    <td><a href="{{route('cash.show',['cash'=>$row->id])}}">{{$count++}}</a></td>
+                                    <td>{{$count++}}</td>
                                     <td>{{$row->trans_date}}</td>
                                     <td>{{$row->expense_category->category}}</td>
                                     <td>{{$row->description}}</td>

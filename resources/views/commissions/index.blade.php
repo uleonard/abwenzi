@@ -13,7 +13,7 @@
         <div class="card-header content-header">Commissions</div>
         <div>
             <a href="{{route('home')}}">
-                <i class="fa fa-arrow-left"></i>Back
+                <i class="fa fa-arrow-left"></i>Go Back
             </a>
             | <a href="{{route('clients.create')}}"> <i class="fa fa-plus"></i>New Client</a>
         </div>

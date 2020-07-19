@@ -8,11 +8,14 @@
     }
 </style>
 @section('content')
-    <div class="card-header content-header">Cash Flow</div>
-    <div class="row">                
-
-                <div class="col-md-12">
-                    
+<div class="col-md-12">
+    <div class="card"> 
+        <div class="card-header content-header">Cash Flow</div>
+            <div>
+                <a href="{{route('home')}}">
+                    <i class="fa fa-arrow-left"></i>Go Back
+                </a>
+            </div>       
                     <div class="card">
                         <form method="POST" action="{{ route('cash.search') }}" class="form form-inline">
                             @csrf  
@@ -65,7 +68,7 @@
                                 <?php $balance = 0;?>
                                 @foreach($rows as $row)
                                 <tr>
-                                    <td><a href="{{route('cash.show',['cash'=>$row->id])}}">{{$count++}}</a></td>
+                                    <td>{{$count++}}</td>
                                     <td>{{$row->trans_date}}</td>
                                     <td>{{$row->description}}</td>
                                     <td>{{$row->entry}}</td>

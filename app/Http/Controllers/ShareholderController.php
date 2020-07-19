@@ -39,7 +39,13 @@ class ShareholderController extends Controller
                             ->orWhere('firstname','LIKE','%'.$firstname.'%')
                             ->get();
 
-        return view('shareholders.index',['rows'=>$rows]);
+        return view('shareholders.index')
+                ->with(
+                    [
+                        'rows'=>$rows,
+                        
+                    ]
+                );
 
     }
 

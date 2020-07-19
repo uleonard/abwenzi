@@ -13,6 +13,11 @@
 </style>
 @section('content')
     <div class="card-header content-header">Expenses | New Expense</div>
+    <div>
+        <a href="{{route('expenses.index')}}">
+            <i class="fa fa-arrow-left"></i>Go Back
+        </a>
+    </div>
     <div class="row">
                 <div class="col-md-4"> </div>               
 

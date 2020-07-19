@@ -3,10 +3,7 @@
     .applications .card{
         background-color:#f7f6f0;
     }
-    .badge{
-        background-color:#7c754e;
-        color:#FFFFFF;
-    }
+    
     .details{
         background-color:#f7f6f0;
     }
@@ -15,6 +12,11 @@
 <div class="col-md-12">
     <div class="card"> 
         <div class="card-header content-header">Loans / Loan Details / {{$row->owner->surname . " " . $row->owner->firstname}}</div>
+            <div>
+                <a href="{{route('loans.index')}}">
+                    <i class="fa fa-arrow-left"></i>Go Back
+                </a>
+            </div>
             <div class="row justify-content-left">
                 <div class="col-md-4 details">
 

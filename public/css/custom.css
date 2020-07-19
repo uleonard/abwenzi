@@ -26,6 +26,16 @@ nav .container{
     color:#dec32a;
     font-size:20px;
 }
+/**  Menu flex items */
+.flex-column .p-2,tbody{ 
+    background-color:#f7f6f0;
+    margin-top:5px;
+}
+
+.flex-column .p-2:hover{
+    font-size:18px;
+    text-decoration:none;
+}
 
 
 .btn-default{

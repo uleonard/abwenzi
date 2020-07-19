@@ -45,9 +45,11 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <!--
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
+                                <a class="nav-link" href="#">{{ Auth::user()->name }}</a>
                             </li>
+                        -->
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -61,19 +63,35 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    Menu <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                                    <div class="d-flex flex-column">
+                                        <a href="{{route('loans.index')}}"> <div class="p-2"><i class="fa fa-dollar fa-x1"></i> Loans </div></a>
+                                        <a href="{{route('clients.index')}}"><div class="p-2"><i class="fa fa-handshake-o fa-x1"></i> Clients </div></a>
+                                        <a href="{{route('commissions.index')}}"><div class="p-2"><i class="fa fa-balance-scale fa-x1"></i> Commissions </div></a>
+                                        <a href="{{route('shareholders.index')}}"><div class="p-2"><i class="fa fa-briefcase fa-x1"></i> Shareholders </div></a>
+                                        <a href="{{route('cash.index')}}"><div class="p-2"><i class="fa fa-money fa-x1"></i> Cash Flow </div></a>
+                                        <a href="{{route('expenses.index')}}"><div class="p-2"><i class="fa fa-line-chart fa-x1"></i> Expenses </div></a>
+                                        <a href="{{route('clients.index')}}"><div class="p-2"><i class="fa fa-users fa-x1"></i> Users </div></a>
+                                        <a href="{{route('clients.index')}}"><div class="p-2"><i class="fa fa-cog fa-x1"></i> Settings </div></a>
+                                        
+                                        <hr>
+                                        <a href="{{route('clients.index')}}"><div class="p-2"><i class="fa fa-user fa-x1"></i> My Account </div></a>
+                                        
+                                        <a href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">
+                                            <div class="p-2"><i class="fa fa-sign-out fa-x1"></i>{{ Auth::user()->name }}</div>
+                                        </a>
+                                        
+                                    </div>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
+                                    
                                 </div>
                             </li>
                         @endguest

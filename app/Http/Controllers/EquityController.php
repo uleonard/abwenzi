@@ -47,7 +47,7 @@ class EquityController extends Controller
 
         }
 
-        return view('equities.index',['rows'=>$rows]);
+        return view('equities.index',['rows'=>$rows,'type'=>$type]);
 
     }
 

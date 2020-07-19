@@ -52,6 +52,7 @@
                                         <th>SN</th>
                                         <th>Shareholder</th>
                                         <th>Trans Date</th>
+                                        <th>Type</th>
                                         <th>Entry</th>
                                         <th>Comment</th>
                                         <th>Amount</th>
@@ -66,6 +67,7 @@
                                     <td>{{$count++}}</td>
                                     <td>{{$row->owned_by->surname . " " . $row->owned_by->firstname}}</td>
                                     <td>{{$row->trans_date}}</td>
+                                    <td>{{$type}}</td>
                                     <td>{{$row->entry}}</td>
                                     <td>{{$row->comment}}</td>
                                     <td>
