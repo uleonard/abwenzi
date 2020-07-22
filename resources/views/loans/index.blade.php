@@ -58,7 +58,7 @@
 
                 </form>
             </div>
-            <div class="table-responsive">
+            <div class="table-responsive" style="height:300px;">
                 <table class="table  table-bordered table-hover">
                     <thead>
                         <tr>
@@ -78,7 +78,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <?php $count = 1;?>
+                    <?php 
+                        $count = 1;
+                        $total_interest = 0;                    
+                    ?>
                     @foreach($rows as $row)
                         <?php 
                                 //Reference: https://stackoverflow.com/questions/52884922/laravel-display-difference-between-two-dates-in-blade/52885035
@@ -119,10 +122,16 @@
                         <td>{{$days_to_due}}</td>
                         
                     </tr>
+                    <?php $total_interest = $total_interest + $row->interest; ?>
                     @endforeach
                     </tbody>
                 </table>
             </div>
+
+            <div class="card alert alert-info" style="font-size:18px;font-weight:bold;">
+                Total Interest for the displayed records is MWK {{number_format($total_interest,2)}}
+            </div>
+
 
         </div>
     </div>

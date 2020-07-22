@@ -40,29 +40,15 @@
             <div class="content-header">Menu</div>
             <div class="d-flex flex-column">
                 <a href="{{route('loans.index')}}"><div class="p-2"><i class="fa fa-dollar fa-x1"></i> Loans </div></a>
-                <a href="{{route('clients.index')}}"><div class="p-2"><i class="fa fa-handshake-o fa-x1"></i> Clients </div></a>
-                <a href="{{route('commissions.index')}}"><div class="p-2"><i class="fa fa-balance-scale fa-x1"></i> Commissions </div></a>
-                <a href="{{route('shareholders.index')}}"><div class="p-2"><i class="fa fa-briefcase fa-x1"></i> Shareholders </div></a>
-                <a href="{{route('cash.index')}}"><div class="p-2"><i class="fa fa-money fa-x1"></i> Cash Flow </div></a>
-                <a href="{{route('expenses.index')}}"><div class="p-2"><i class="fa fa-line-chart fa-x1"></i> Expenses </div></a>
-                <a href="{{route('clients.index')}}"><div class="p-2"><i class="fa fa-users fa-x1"></i> Users </div></a>
-                <a href="{{route('clients.index')}}"><div class="p-2"><i class="fa fa-cog fa-x1"></i> Settings </div></a>
-                
+               <a href="{{route('commissions.index')}}"><div class="p-2"><i class="fa fa-balance-scale fa-x1"></i> Commissions </div></a>
+               
             </div>
         </div>
             <div class="col-md-5">
                 <div class="content-header">Statistics</div>
                 
                     <div class="card-columns">
-                        <div class="card statistics">
-                            <div class="card-head">
-                                <span>Cash Available</span>
-                            </div>
-                            <div class="card-body">
-                                MWK <br>
-                                {{number_format($stat['cash'],2)}}
-                            </div> 
-                        </div>
+                        
                         <div class="card statistics">
                             <div class="card-head">
                                 <span>Interest - Month</span>
@@ -81,19 +67,6 @@
                                 {{number_format($stat['interest_year'],2)}}
                             </div> 
                         </div>
-                    </div>
-                    
-                     <div class="card-columns">
-                        
-                        <div class="card statistics">
-                            <div class="card-head">
-                                <span>Cash Available</span>
-                            </div>
-                            <div class="card-body">
-                                MWK <br>
-                                202 000.00
-                            </div> 
-                        </div>
                         <div class="card statistics">
                             <div class="card-head">
                                 <span>Commission Payable</span>
@@ -105,6 +78,11 @@
                             
                             
                         </div>
+                    </div>
+                    
+                     <div class="card-columns">
+                        
+                        
                         <div class="card statistics">
                             <div class="card-head">
                                 <span>Defaulters - Year</span>
@@ -115,18 +93,8 @@
                             
                             
                         </div>
-                    </div>
-                    <div class="card-columns">
+                   
                         
-                        <div class="card statistics">
-                            <div class="card-head">
-                                <span>Defaulters - Month</span>
-                            </div>
-                            <div class="card-body">
-                                
-                                {{number_format($stat['defaulters_month'],0)}}
-                            </div> 
-                        </div>
                         <div class="card statistics">
                             <div class="card-head">
                                 <span>Loans - Month</span>

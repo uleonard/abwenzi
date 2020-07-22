@@ -13,7 +13,7 @@
 @section('content')
 <div class="col-md-12">
     <div class="card"> 
-        <div class="card-header content-header">Shareholders / Profile</div>
+        <div class="card-header content-header">Clients / Profile</div>
             <div>
                 <a href="{{route('clients.index')}}">
                     <i class="fa fa-arrow-left"></i>Back

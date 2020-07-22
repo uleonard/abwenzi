@@ -102,10 +102,10 @@
 
                                             <div class="col-md-6">                                                
                                                 <select id="id_type" class="form-control @error('id_type') is-invalid @enderror" name="id_type" value="{{ old('id_type') }}" required autocomplete="id_type" >
-                                                    <option value="1">National ID</option>
-                                                    <option value="2">Passport</option>
-                                                    <option value="3">Driver's Licence</option>
-                                                    <option value="4">Employment ID</option>
+                                                    <option value="National ID">National ID</option>
+                                                    <option value="Passport">Passport</option>
+                                                    <option value="Driver's Licence">Driver's Licence</option>
+                                                    <option value="Employment ID">Employment ID</option>
                                                 </select>
 
                                                 @error('id_type')

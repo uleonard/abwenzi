@@ -35,6 +35,7 @@ Route::resource('loans', 'LoanController')->except([
 
 Route::get('/loans/{id}/create', 'LoanController@create')->name('loans.create');
 Route::post('/loans/search', 'LoanController@search')->name('loans.search');
+Route::post('/loans/defaulters', 'LoanController@defaulters')->name('loans.defaulters');
 
 Route::post('/loans/attachments/store', 'LoanAttachmentController@store')->name('loans.attachments.store');
 
@@ -94,3 +95,4 @@ Route::post('/savings', 'SavingController@store')->name('savings.store');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/agent', 'HomeController@agent')->name('home.agent');

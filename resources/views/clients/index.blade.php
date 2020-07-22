@@ -56,9 +56,15 @@
                                     <td>{{$row->physical_address}}</td>
                                     <td>{{$row->phone}} | {{$row->phone_other}}</td>
                                     <td>{{$row->email}}</td>
-                                    <td><a href="{{route('loans.create',['id'=>$row->id])}}" 
+                                    <td>
+                                        <a href="{{route('loans.create',['id'=>$row->id])}}" 
                                             data-toggle="tooltip" data-placement="bottom" title="New loan">
                                             <i class="fa fa-plus"></i><i class="fa fa-dollar"></i> 
+                                        </a>
+                                        |
+                                        <a href="{{route('loans.create',['id'=>$row->id])}}" 
+                                            data-toggle="tooltip" data-placement="bottom" title="Messages">
+                                             <i class="fa fa-paper-plane"></i> 
                                         </a>
                                     </td>
                                 </tr>

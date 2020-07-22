@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Client;
 
+use Auth;
+
 class ClientController extends Controller
 {
     /**
@@ -15,6 +17,8 @@ class ClientController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        
     }
 
     /**
@@ -24,6 +28,11 @@ class ClientController extends Controller
      */
     public function index()
     {
+        /**CHECK IF NOT AUTHORIZED USER */
+        if(Auth::user()->role=="AGENT")
+            return redirect('/home/agent');
+
+
         $clients = Client::all();
         return view('clients.index')
                ->with([
@@ -98,8 +107,7 @@ class ClientController extends Controller
         $request->id_attachment->move(public_path('../uploads/clients'), $id_attachment);
        
 
-        //$current_user = Auth::id();
-        $current_user = 1;
+        $current_user = Auth::id();
         
         $client = new Client;
         $client->firstname = $request['firstname'];

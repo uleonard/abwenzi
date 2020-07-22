@@ -31,7 +31,11 @@ class CommissionController extends Controller
      */
     public function index()
     {
-        $rows = Commission::whereYear('created_at',date('Y'))->get();
+        $current_user = Auth::id();
+        if(Auth::user()->role=="AGENT")
+            $rows = Commission::whereYear('created_at',date('Y'))->where('agent',$current_user)->get();
+        else
+            $rows = Commission::whereYear('created_at',date('Y'))->get();
 
         $users = User::where('role','AGENT')->get();
 

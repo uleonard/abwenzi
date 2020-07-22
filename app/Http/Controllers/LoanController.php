@@ -35,7 +35,11 @@ class LoanController extends Controller
      */
     public function index()
     {
-        $loans = Loan::all();
+        $loans = [];
+        if(Auth::user()->role=="AGENT")
+            $loans = Loan::where('processed_by',Auth::id())->whereYear('date_authorized',date('Y'))->get();
+        else
+            $loans = Loan::whereYear('date_authorized',date('Y'))->get();
         $users = User::all();
 
         return view('loans.index',
@@ -43,7 +47,7 @@ class LoanController extends Controller
                     'rows'=>$loans,
                     'users'=>$users,
                     'year'=>date('Y'),
-                    'month'=>date('m')
+                    'month'=>"--"
                 ]);
         //return $loans;
     }
@@ -198,32 +202,61 @@ class LoanController extends Controller
         $month = $request['month'];
         $loan_number = $request['search'];
         $client = $request['search'];
-        //$processed_by = $request['processed_by'];
-        //$authorized_by = $request['authorized_by'];
 
         $loans = [];
-
-        if(!$request->search == ""){
-            $loans = Loan::whereHas('owner', function($q) use ($client){
-                                    $q->where('surname','LIKE','%'.$client.'%');
-                                })
-                            ->orWhere('id',$loan_number)
-                            ->get();
-        }
         
-        else if($request->month == "--"){
-            $loans = Loan::whereYear('date_authorized',$year)
-                            //->where('id','LIKE', $loan_number.'%')
-                           // ->whereHas('owner', function($q) use ($client){
-                            //        $q->where('surname','LIKE','%'.$client.'%');
-                            //    })
-                            ->get();
-        }
-        else  {
-            $loans = Loan::whereYear('date_authorized',$year)
-                            ->whereMonth('date_authorized',$month)
-                            //->where('id','LIKE', $loan_number.'%')
-                            ->get();
+
+        switch(Auth::user()->role)
+        {
+            /**
+             * AGENT ROLE 
+             */
+            
+            case "AGENT":
+                $current_user = Auth::id();
+
+                if(!$request->search == ""){
+                    $loans = Loan::whereHas('owner', function($q) use ($client){
+                                            $q->where('surname','LIKE','%'.$client.'%');
+                                        })
+                                    ->where('processed_by',$current_user)
+                                    ->orWhere('id',$loan_number)
+                                    ->get();
+                }
+                
+                else if($request->month == "--"){
+                    $loans = Loan::whereYear('date_authorized',$year)
+                                ->where('processed_by',$current_user)
+                                ->get();
+                }
+                else  {
+                    $loans = Loan::whereYear('date_authorized',$year)
+                                    ->whereMonth('date_authorized',$month)
+                                    ->where('processed_by',$current_user)
+                                    ->get();
+                }
+
+            break;
+            /**
+             * DEFAULT CASE: FOR MANAGER AND CLERK ROLES 
+             * */
+            default:
+                if(!$request->search == ""){
+                    $loans = Loan::whereHas('owner', function($q) use ($client){
+                                            $q->where('surname','LIKE','%'.$client.'%');
+                                        })
+                                    ->orWhere('id',$loan_number)
+                                    ->get();
+                }
+                
+                else if($request->month == "--"){
+                    $loans = Loan::whereYear('date_authorized',$year)->get();
+                }
+                else  {
+                    $loans = Loan::whereYear('date_authorized',$year)
+                                    ->whereMonth('date_authorized',$month)
+                                    ->get();
+                }
         }
 
         $users = User::all();

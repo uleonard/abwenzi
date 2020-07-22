@@ -30,7 +30,7 @@ class EquityController extends Controller
     public function index()
     {
         $rows = Equity::all();
-        return view('equities.index',['rows'=>$rows]);
+        return view('equities.index',['rows'=>$rows,'type'=>'EQUITY']);
     }
 
     public function search(Request $request)

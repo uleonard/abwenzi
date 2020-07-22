@@ -87,11 +87,11 @@
                         
                         <div class="card statistics">
                             <div class="card-head">
-                                <span>Cash Available</span>
+                                <span>Cash Lendable</span>
                             </div>
                             <div class="card-body">
                                 MWK <br>
-                                202 000.00
+                                {{number_format($stat['cash_lendable'],2)}}
                             </div> 
                         </div>
                         <div class="card statistics">
